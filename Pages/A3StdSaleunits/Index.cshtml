@@ -7,7 +7,9 @@
 <h1>Sale Units</h1>
 
 <p>
-    <a asp-page="Create" class="btn btn-primary">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> New
+    </a>
 </p>
 
 <div class="mb-3">
@@ -15,34 +17,38 @@
 </div>
 
 <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-<table id="a3StdSaleunitsTable" class="table table-striped">
-    <thead>
-        <tr>
-            <th class="sortable">Code</th>
-            <th class="sortable">Name</th>
-            <th class="sortable">Note</th>
-            <th class="sortable">PL Review Cfg</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Saleunits)
-{
-        <tr data-id="@item.SaleunitId">
-            <td>@item.SaleunitCode</td>
-            <td>@item.SaleunitName</td>
-            <td>@item.Note</td>
-            <td>@item.PlReviewCfg</td>
-            <td>
-                <a asp-page="Edit" asp-route-id="@item.SaleunitId">Edit</a> |
-                <a asp-page="Delete" asp-route-id="@item.SaleunitId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <table id="a3StdSaleunitsTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th class="sortable">Code</th>
+                <th class="sortable">Name</th>
+                <th class="sortable">Note</th>
+                <th class="sortable">PL Review Cfg</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Saleunits)
+            {
+                <tr data-id="@item.SaleunitId">
+                    <td>@item.SaleunitCode</td>
+                    <td>@item.SaleunitName</td>
+                    <td>@item.Note</td>
+                    <td>@item.PlReviewCfg</td>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@item.SaleunitId">
+                            <i class="bi bi-pencil-square me-1"></i>
+                        </a>|
+                        <a asp-page="Delete" asp-route-id="@item.SaleunitId" class="text-danger">
+                            <i class="bi bi-trash me-1"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/a3stdsaleunit-table.js" asp-append-version="true"></script>
 }

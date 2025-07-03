@@ -7,7 +7,9 @@
 <h1>Saleunit Types</h1>
 
 <p>
-    <a asp-page="Create" class="btn btn-primary">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> New
+    </a>
 </p>
 
 <table class="table">
@@ -19,16 +21,20 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Items)
-{
-        <tr>
-            <td>@item.SaleunitType</td>
-            <td>@item.ObjDescription</td>
-            <td>
-                <a asp-page="Edit" asp-route-id="@item.ObjId">Edit</a> |
-                <a asp-page="Delete" asp-route-id="@item.ObjId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.SaleunitType</td>
+                <td>@item.ObjDescription</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@item.ObjId">
+                        <i class="bi bi-pencil-square me-1"></i>
+                    </a>|
+                    <a asp-page="Delete" asp-route-id="@item.ObjId" class="text-danger">
+                        <i class="bi bi-trash me-1"></i>
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
