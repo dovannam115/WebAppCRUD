@@ -16,6 +16,8 @@
             <th>Id</th>
             <th>Code</th>
             <th>Name</th>
+            <th>Note</th>
+            <th>PL Review Cfg</th>
             <th></th>
         </tr>
     </thead>
@@ -26,6 +28,8 @@
             <td>@item.SaleUnitId</td>
             <td>@item.SaleUnitCode</td>
             <td>@item.SaleUnitName</td>
+            <td>@item.Note</td>
+            <td>@item.PlReviewCfg</td>
             <td>
                 <a asp-page="Edit" asp-route-id="@item.SaleUnitId">Edit</a> |
                 <a asp-page="Delete" asp-route-id="@item.SaleUnitId">Delete</a>

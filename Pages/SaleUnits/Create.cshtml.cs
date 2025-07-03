@@ -19,6 +19,7 @@ namespace ControlCenterApp.Pages.SaleUnits
 
         public void OnGet()
         {
+            SaleUnit.InsertTime = DateTime.UtcNow;
         }
 
         public async Task<IActionResult> OnPostAsync()

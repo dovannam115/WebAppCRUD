@@ -14,8 +14,9 @@ namespace ControlCenterApp.Models
         [Column("INSERT_TIME")]
         public DateTime? InsertTime { get; set; }
 
+        [Required]
         [Column("SALEUNIT_CODE")]
-        public string? SaleUnitCode { get; set; }
+        public string SaleUnitCode { get; set; } = string.Empty;
 
         [Column("SALEUNIT_NAME")]
         public string? SaleUnitName { get; set; }
@@ -23,8 +24,9 @@ namespace ControlCenterApp.Models
         [Column("NOTE")]
         public string? Note { get; set; }
 
+        [Required]
         [Column("PL_REVIEW_CFG")]
-        public string? PlReviewCfg { get; set; }
+        public int PlReviewCfg { get; set; }
 
         [Column("SALEUNIT_TYPE_ID")]
         public Guid? SaleUnitTypeId { get; set; }
