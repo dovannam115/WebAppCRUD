@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ControlCenterApp.Data;
 using ControlCenterApp.Models;
 
-namespace ControlCenterApp.Pages.SaleUnits
+namespace ControlCenterApp.Pages.A3StdSaleunitTypes
 {
     public class EditModel : PageModel
     {
@@ -16,16 +16,16 @@ namespace ControlCenterApp.Pages.SaleUnits
         }
 
         [BindProperty]
-        public SaleUnit SaleUnit { get; set; } = new();
+        public A3StdSaleunitType Item { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            var entity = await _context.SaleUnits.FindAsync(id);
+            var entity = await _context.A3StdSaleunitTypes.FindAsync(id);
             if (entity == null)
             {
                 return NotFound();
             }
-            SaleUnit = entity;
+            Item = entity;
             return Page();
         }
 
@@ -36,7 +36,7 @@ namespace ControlCenterApp.Pages.SaleUnits
                 return Page();
             }
 
-            _context.Attach(SaleUnit).State = EntityState.Modified;
+            _context.Attach(Item).State = EntityState.Modified;
 
             try
             {
@@ -44,7 +44,7 @@ namespace ControlCenterApp.Pages.SaleUnits
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _context.SaleUnits.AnyAsync(e => e.SaleUnitId == SaleUnit.SaleUnitId))
+                if (!await _context.A3StdSaleunitTypes.AnyAsync(e => e.ObjId == Item.ObjId))
                 {
                     return NotFound();
                 }

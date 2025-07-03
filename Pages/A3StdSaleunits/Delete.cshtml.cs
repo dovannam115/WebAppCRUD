@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ControlCenterApp.Data;
 using ControlCenterApp.Models;
 
-namespace ControlCenterApp.Pages.SaleUnits
+namespace ControlCenterApp.Pages.A3StdSaleunits
 {
     public class DeleteModel : PageModel
     {
@@ -16,29 +16,29 @@ namespace ControlCenterApp.Pages.SaleUnits
         }
 
         [BindProperty]
-        public SaleUnit SaleUnit { get; set; } = new();
+        public A3StdSaleunit Saleunit { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            var entity = await _context.SaleUnits.FirstOrDefaultAsync(m => m.SaleUnitId == id);
+            var entity = await _context.A3StdSaleunits.FirstOrDefaultAsync(m => m.SaleunitId == id);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            SaleUnit = entity;
+            Saleunit = entity;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var entity = await _context.SaleUnits.FindAsync(SaleUnit.SaleUnitId);
+            var entity = await _context.A3StdSaleunits.FindAsync(Saleunit.SaleunitId);
             if (entity == null)
             {
                 return NotFound();
             }
 
-            _context.SaleUnits.Remove(entity);
+            _context.A3StdSaleunits.Remove(entity);
             await _context.SaveChangesAsync();
             return RedirectToPage("Index");
         }

@@ -1,0 +1,26 @@
+@page
+@model ControlCenterApp.Pages.A3StdSaleunitRegions.CreateModel
+@{
+    ViewData["Title"] = "Create Saleunit Region";
+}
+
+<h1>Create Saleunit Region</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Item.SaleunitRegion" class="form-label"></label>
+        <input asp-for="Item.SaleunitRegion" class="form-control" />
+        <span asp-validation-for="Item.SaleunitRegion" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.ObjDescription" class="form-label"></label>
+        <input asp-for="Item.ObjDescription" class="form-control" />
+        <span asp-validation-for="Item.ObjDescription" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

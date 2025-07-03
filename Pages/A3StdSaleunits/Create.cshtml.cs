@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ControlCenterApp.Data;
 using ControlCenterApp.Models;
 
-namespace ControlCenterApp.Pages.SaleUnits
+namespace ControlCenterApp.Pages.A3StdSaleunits
 {
     public class CreateModel : PageModel
     {
@@ -15,11 +15,11 @@ namespace ControlCenterApp.Pages.SaleUnits
         }
 
         [BindProperty]
-        public SaleUnit SaleUnit { get; set; } = new();
+        public A3StdSaleunit Saleunit { get; set; } = new();
 
         public void OnGet()
         {
-            SaleUnit.InsertTime = DateTime.UtcNow;
+            Saleunit.InsertTime = DateTime.UtcNow;
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -29,7 +29,7 @@ namespace ControlCenterApp.Pages.SaleUnits
                 return Page();
             }
 
-            _context.SaleUnits.Add(SaleUnit);
+            _context.A3StdSaleunits.Add(Saleunit);
             await _context.SaveChangesAsync();
             return RedirectToPage("Index");
         }
