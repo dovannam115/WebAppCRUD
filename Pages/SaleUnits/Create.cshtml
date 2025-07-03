@@ -1,0 +1,26 @@
+@page
+@model ControlCenterApp.Pages.SaleUnits.CreateModel
+@{
+    ViewData["Title"] = "Create Sale Unit";
+}
+
+<h1>Create Sale Unit</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="SaleUnit.SaleUnitCode" class="form-label"></label>
+        <input asp-for="SaleUnit.SaleUnitCode" class="form-control" />
+        <span asp-validation-for="SaleUnit.SaleUnitCode" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.SaleUnitName" class="form-label"></label>
+        <input asp-for="SaleUnit.SaleUnitName" class="form-control" />
+        <span asp-validation-for="SaleUnit.SaleUnitName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,54 @@
+# Build
+bin/
+obj/
+out/
+
+# Publish output
+publish/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# NuGet
+*.nupkg
+packages/
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# User secrets & dev settings
+secrets.json
+appsettings.Development.json
+
+# IIS Express
+iisexpress/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tooling cache
+*.cache
+
+# Database files
+*.mdf
+*.ldf
+*.dbmdl

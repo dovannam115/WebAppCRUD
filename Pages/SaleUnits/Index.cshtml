@@ -1,0 +1,36 @@
+@page
+@model ControlCenterApp.Pages.SaleUnits.IndexModel
+@{
+    ViewData["Title"] = "Sale Units";
+}
+
+<h1>Sale Units</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SaleUnits)
+{
+        <tr>
+            <td>@item.SaleUnitId</td>
+            <td>@item.SaleUnitCode</td>
+            <td>@item.SaleUnitName</td>
+            <td>
+                <a asp-page="Edit" asp-route-id="@item.SaleUnitId">Edit</a> |
+                <a asp-page="Delete" asp-route-id="@item.SaleUnitId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

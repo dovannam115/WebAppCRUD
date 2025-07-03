@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Home page";
+
+    // Grab the "name" claim (your display name) instead of the UPN
+    var displayName = User.FindFirst("name")?.Value
+                      ?? User.FindFirst(ClaimTypes.Name)?.Value
+                      ?? "User";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @displayName</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

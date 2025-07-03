@@ -1,0 +1,17 @@
+@page "{id:int}"
+@model ControlCenterApp.Pages.SaleUnits.DeleteModel
+@{
+    ViewData["Title"] = "Delete Sale Unit";
+}
+
+<h1>Delete Sale Unit</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>@Model.SaleUnit.SaleUnitName</h4>
+    <form method="post">
+        <input type="hidden" asp-for="SaleUnit.SaleUnitId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
