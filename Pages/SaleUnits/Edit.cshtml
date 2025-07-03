@@ -18,6 +18,36 @@
         <input asp-for="SaleUnit.SaleUnitName" class="form-control" />
         <span asp-validation-for="SaleUnit.SaleUnitName" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.Note" class="form-label"></label>
+        <input asp-for="SaleUnit.Note" class="form-control" />
+        <span asp-validation-for="SaleUnit.Note" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.PlReviewCfg" class="form-label"></label>
+        <input asp-for="SaleUnit.PlReviewCfg" class="form-control" />
+        <span asp-validation-for="SaleUnit.PlReviewCfg" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.InsertTime" class="form-label"></label>
+        <input asp-for="SaleUnit.InsertTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="SaleUnit.InsertTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.SaleUnitTypeId" class="form-label"></label>
+        <input asp-for="SaleUnit.SaleUnitTypeId" class="form-control" />
+        <span asp-validation-for="SaleUnit.SaleUnitTypeId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.SaleUnitGroupId" class="form-label"></label>
+        <input asp-for="SaleUnit.SaleUnitGroupId" class="form-control" />
+        <span asp-validation-for="SaleUnit.SaleUnitGroupId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SaleUnit.SaleUnitRegionId" class="form-label"></label>
+        <input asp-for="SaleUnit.SaleUnitRegionId" class="form-control" />
+        <span asp-validation-for="SaleUnit.SaleUnitRegionId" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-page="Index" class="btn btn-secondary">Back</a>
 </form>
