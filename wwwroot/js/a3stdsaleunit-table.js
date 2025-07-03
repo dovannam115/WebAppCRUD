@@ -2,13 +2,13 @@ $(document).ready(function () {
     // Search filter
     $('#tableSearch').on('keyup', function () {
         var value = $(this).val().toLowerCase();
-        $('#saleUnitsTable tbody tr').filter(function () {
+        $('#a3StdSaleunitsTable tbody tr').filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
     });
 
     // Sorting
-    $('#saleUnitsTable th.sortable').on('click', function () {
+    $('#a3StdSaleunitsTable th.sortable').on('click', function () {
         var table = $(this).parents('table').eq(0);
         var rows = table.find('tbody tr').toArray().sort(comparer($(this).index()));
         this.asc = !this.asc;

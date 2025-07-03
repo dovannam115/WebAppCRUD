@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ControlCenterApp.Data;
 using ControlCenterApp.Models;
 
-namespace ControlCenterApp.Pages.SaleUnits
+namespace ControlCenterApp.Pages.A3StdSaleunitTypes
 {
     public class IndexModel : PageModel
     {
@@ -14,11 +14,11 @@ namespace ControlCenterApp.Pages.SaleUnits
             _context = context;
         }
 
-        public IList<SaleUnit> SaleUnits { get; set; } = new List<SaleUnit>();
+        public IList<A3StdSaleunitType> Items { get; set; } = new List<A3StdSaleunitType>();
 
         public async Task OnGetAsync()
         {
-            SaleUnits = await _context.SaleUnits.AsNoTracking().ToListAsync();
+            Items = await _context.A3StdSaleunitTypes.AsNoTracking().ToListAsync();
         }
     }
 }
