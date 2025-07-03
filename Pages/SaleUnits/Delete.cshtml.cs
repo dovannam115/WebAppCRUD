@@ -18,7 +18,7 @@ namespace ControlCenterApp.Pages.SaleUnits
         [BindProperty]
         public SaleUnit SaleUnit { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             var entity = await _context.SaleUnits.FirstOrDefaultAsync(m => m.SaleUnitId == id);
             if (entity == null)
