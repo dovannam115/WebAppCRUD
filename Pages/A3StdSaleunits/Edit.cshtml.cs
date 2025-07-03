@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ControlCenterApp.Data;
 using ControlCenterApp.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControlCenterApp.Pages.A3StdSaleunits
 {
@@ -18,6 +19,10 @@ namespace ControlCenterApp.Pages.A3StdSaleunits
         [BindProperty]
         public A3StdSaleunit Saleunit { get; set; } = new();
 
+        public SelectList SaleunitTypeSelectList { get; set; } = default!;
+        public SelectList SaleunitGroupSelectList { get; set; } = default!;
+        public SelectList SaleunitRegionSelectList { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             var entity = await _context.A3StdSaleunits.FindAsync(id);
@@ -26,6 +31,7 @@ namespace ControlCenterApp.Pages.A3StdSaleunits
                 return NotFound();
             }
             Saleunit = entity;
+            LoadSelectLists();
             return Page();
         }
 
@@ -33,6 +39,7 @@ namespace ControlCenterApp.Pages.A3StdSaleunits
         {
             if (!ModelState.IsValid)
             {
+                LoadSelectLists();
                 return Page();
             }
 
@@ -55,6 +62,13 @@ namespace ControlCenterApp.Pages.A3StdSaleunits
             }
 
             return RedirectToPage("Index");
+        }
+
+        private void LoadSelectLists()
+        {
+            SaleunitTypeSelectList = new SelectList(_context.A3StdSaleunitTypes.OrderBy(t => t.SaleunitType), "ObjId", "SaleunitType");
+            SaleunitGroupSelectList = new SelectList(_context.A3StdSaleunitGroups.OrderBy(g => g.SaleunitGroup), "ObjId", "SaleunitGroup");
+            SaleunitRegionSelectList = new SelectList(_context.A3StdSaleunitRegions.OrderBy(r => r.SaleunitRegion), "ObjId", "SaleunitRegion");
         }
     }
 }
