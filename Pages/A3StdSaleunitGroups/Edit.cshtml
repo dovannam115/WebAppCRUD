@@ -9,12 +9,12 @@
 <form method="post">
     <input type="hidden" asp-for="Item.ObjId" />
     <div class="mb-3">
-        <label asp-for="Item.SaleunitGroup" class="form-label"></label>
+        <label asp-for="Item.SaleunitGroup" class="form-label">Group</label>
         <input asp-for="Item.SaleunitGroup" class="form-control" />
         <span asp-validation-for="Item.SaleunitGroup" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Item.ObjDescription" class="form-label"></label>
+        <label asp-for="Item.ObjDescription" class="form-label">Description</label>
         <input asp-for="Item.ObjDescription" class="form-control" />
         <span asp-validation-for="Item.ObjDescription" class="text-danger"></span>
     </div>

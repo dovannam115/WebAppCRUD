@@ -35,17 +35,17 @@
     </div>
     <div class="mb-3">
         <label asp-for="Saleunit.SaleunitTypeId" class="form-label">Type</label>
-        <select asp-for="Saleunit.SaleunitTypeId" asp-items="Model.SaleunitTypeSelectList" class="form-select"></select>
+        <select asp-for="Saleunit.SaleunitTypeId" asp-items="Model.SaleunitTypeSelectList" class="form-select searchable"></select>
         <span asp-validation-for="Saleunit.SaleunitTypeId" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Saleunit.SaleunitGroupId" class="form-label">Group</label>
-        <select asp-for="Saleunit.SaleunitGroupId" asp-items="Model.SaleunitGroupSelectList" class="form-select"></select>
+        <select asp-for="Saleunit.SaleunitGroupId" asp-items="Model.SaleunitGroupSelectList" class="form-select searchable"></select>
         <span asp-validation-for="Saleunit.SaleunitGroupId" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="Saleunit.SaleunitRegionId" class="form-label">Region</label>
-        <select asp-for="Saleunit.SaleunitRegionId" asp-items="Model.SaleunitRegionSelectList" class="form-select"></select>
+        <select asp-for="Saleunit.SaleunitRegionId" asp-items="Model.SaleunitRegionSelectList" class="form-select searchable"></select>
         <span asp-validation-for="Saleunit.SaleunitRegionId" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
@@ -54,4 +54,5 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/select-search.js" asp-append-version="true"></script>
 }
