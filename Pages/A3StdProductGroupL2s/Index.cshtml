@@ -1,0 +1,34 @@
+@page
+@model ControlCenterApp.Pages.A3StdProductGroupL2s.IndexModel
+@{
+    ViewData["Title"] = "Product Group L2s";
+}
+
+<h1>Product Group L2s</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Group</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items)
+{
+        <tr>
+            <td>@item.ProductGroupL2</td>
+            <td>@item.ObjDescription</td>
+            <td>
+                <a asp-page="Edit" asp-route-id="@item.ObjId">Edit</a> |
+                <a asp-page="Delete" asp-route-id="@item.ObjId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

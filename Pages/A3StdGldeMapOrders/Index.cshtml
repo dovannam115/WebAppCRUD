@@ -1,0 +1,36 @@
+@page
+@model ControlCenterApp.Pages.A3StdGldeMapOrders.IndexModel
+@{
+    ViewData["Title"] = "Map Orders";
+}
+
+<h1>Map Orders</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Map Order</th>
+            <th>Description</th>
+            <th>Logic Order</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Items)
+{
+    <tr>
+        <td>@item.MapOrder</td>
+        <td>@item.ObjDescription</td>
+        <td>@item.LogicOrder</td>
+        <td>
+            <a asp-page="Edit" asp-route-id="@item.ObjId">Edit</a> |
+            <a asp-page="Delete" asp-route-id="@item.ObjId">Delete</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
