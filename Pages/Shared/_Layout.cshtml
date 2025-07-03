@@ -1,4 +1,6 @@
-﻿@using System.Security.Claims
+@using System.Security.Claims
+@using ControlCenterApp.Models
+@inject ControlCenterApp.Data.ApplicationDbContext Db
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +20,7 @@
     @{
         var displayName = User.Identity?.Name;
         var email = User.FindFirst("preferred_username")?.Value;
+        var saleunitMenuItems = Db.A3StdSaleunits.OrderBy(s => s.SaleunitName).ToList();
     }
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -35,8 +38,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/A3StdSaleunits/Index">Sale Units</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="saleunitDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sale Units</a>
+                            <ul class="dropdown-menu" aria-labelledby="saleunitDropdown">
+                                @foreach (var su in saleunitMenuItems)
+                                {
+                                    <li><a class="dropdown-item" asp-page="/A3StdSaleunits/Edit" asp-route-id="@su.SaleunitId">@su.SaleunitName</a></li>
+                                }
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-page="/A3StdSaleunits/Index">View All</a></li>
+                            </ul>
                         </li>
                     </ul>
                     @if (User.Identity?.IsAuthenticated ?? false)
