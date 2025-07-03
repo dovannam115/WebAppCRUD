@@ -7,7 +7,9 @@
 <h1>Distributor Type L1s</h1>
 
 <p>
-    <a asp-page="Create" class="btn btn-primary">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>Create New
+    </a>
 </p>
 
 <table class="table">
@@ -25,8 +27,12 @@
             <td>@item.DistributorTypeL1</td>
             <td>@item.ObjDescription</td>
             <td>
-                <a asp-page="Edit" asp-route-id="@item.ObjId">Edit</a> |
-                <a asp-page="Delete" asp-route-id="@item.ObjId">Delete</a>
+                <a asp-page="Edit" asp-route-id="@item.ObjId">
+                    <i class="bi bi-pencil-square me-1"></i>Edit
+                </a> |
+                <a asp-page="Delete" asp-route-id="@item.ObjId" class="text-danger">
+                    <i class="bi bi-trash me-1"></i>Delete
+                </a>
             </td>
         </tr>
 }
