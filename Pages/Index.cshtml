@@ -12,6 +12,19 @@
 }
 
 <div class="text-center">
+    <i class="bi bi-speedometer2 display-3 text-primary"></i>
     <h1 class="display-4">Welcome @displayName</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="dropdown mt-4">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="saleUnitMenu" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-table"></i> Sales Unit Tables
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="saleUnitMenu">
+            <li><a class="dropdown-item" asp-page="/A3StdSaleunits/Index"><i class="bi bi-shop me-2"></i>Sales Units</a></li>
+            <li><a class="dropdown-item" asp-page="/A3StdSaleunitGroups/Index"><i class="bi bi-collection me-2"></i>Sales Unit Groups</a></li>
+            <li><a class="dropdown-item" asp-page="/A3StdSaleunitRegions/Index"><i class="bi bi-globe me-2"></i>Sales Unit Regions</a></li>
+            <li><a class="dropdown-item" asp-page="/A3StdSaleunitTypes/Index"><i class="bi bi-tag me-2"></i>Sales Unit Types</a></li>
+        </ul>
+    </div>
 </div>
