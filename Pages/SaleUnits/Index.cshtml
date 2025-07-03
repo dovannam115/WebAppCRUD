@@ -10,22 +10,25 @@
     <a asp-page="Create" class="btn btn-primary">Create New</a>
 </p>
 
-<table class="table">
+<div class="mb-3">
+    <input id="tableSearch" type="text" class="form-control" placeholder="Search..." />
+</div>
+
+<div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+<table id="saleUnitsTable" class="table table-striped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Note</th>
-            <th>PL Review Cfg</th>
+            <th class="sortable">Code</th>
+            <th class="sortable">Name</th>
+            <th class="sortable">Note</th>
+            <th class="sortable">PL Review Cfg</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.SaleUnits)
 {
-        <tr>
-            <td>@item.SaleUnitId</td>
+        <tr data-id="@item.SaleUnitId">
             <td>@item.SaleUnitCode</td>
             <td>@item.SaleUnitName</td>
             <td>@item.Note</td>
@@ -38,3 +41,8 @@
 }
     </tbody>
 </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/saleunit-table.js" asp-append-version="true"></script>
+}
