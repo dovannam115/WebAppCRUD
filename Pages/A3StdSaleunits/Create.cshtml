@@ -7,51 +7,79 @@
 <h1>Create Sale Unit</h1>
 
 <form method="post">
-    <div class="mb-3">
-        <label asp-for="Saleunit.SaleunitCode" class="form-label">Code</label>
-        <input asp-for="Saleunit.SaleunitCode" class="form-control" />
-        <span asp-validation-for="Saleunit.SaleunitCode" class="text-danger"></span>
+    <div class="row">
+        <!-- Column 1 -->
+        <div class="col-md-6">
+            <fieldset class="border p-3 mb-4 shadow-sm rounded">
+                <legend class="w-auto px-2">General Info</legend>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.SaleunitCode" class="form-label">Code</label>
+                    <input asp-for="Saleunit.SaleunitCode" class="form-control" />
+                    <span asp-validation-for="Saleunit.SaleunitCode" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.SaleunitName" class="form-label">Name</label>
+                    <input asp-for="Saleunit.SaleunitName" class="form-control" />
+                    <span asp-validation-for="Saleunit.SaleunitName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.Note" class="form-label">Note</label>
+                    <input asp-for="Saleunit.Note" class="form-control" />
+                    <span asp-validation-for="Saleunit.Note" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.PlReviewCfg" class="form-label">PL Review Cfg</label>
+                    <input asp-for="Saleunit.PlReviewCfg" class="form-control" />
+                    <span asp-validation-for="Saleunit.PlReviewCfg" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.InsertTime" class="form-label">Insert Time</label>
+                    <input asp-for="Saleunit.InsertTime" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="Saleunit.InsertTime" class="text-danger"></span>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Column 2 -->
+        <div class="col-md-6">
+            <fieldset class="border p-3 mb-4 shadow-sm rounded">
+                <legend class="w-auto px-2">Classification</legend>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.SaleunitTypeId" class="form-label">Type</label>
+                    <select asp-for="Saleunit.SaleunitTypeId" asp-items="Model.SaleunitTypeSelectList"
+                        class="form-select searchable"></select>
+                    <span asp-validation-for="Saleunit.SaleunitTypeId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.SaleunitGroupId" class="form-label">Group</label>
+                    <select asp-for="Saleunit.SaleunitGroupId" asp-items="Model.SaleunitGroupSelectList"
+                        class="form-select searchable"></select>
+                    <span asp-validation-for="Saleunit.SaleunitGroupId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Saleunit.SaleunitRegionId" class="form-label">Region</label>
+                    <select asp-for="Saleunit.SaleunitRegionId" asp-items="Model.SaleunitRegionSelectList"
+                        class="form-select searchable"></select>
+                    <span asp-validation-for="Saleunit.SaleunitRegionId" class="text-danger"></span>
+                </div>
+            </fieldset>
+        </div>
     </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.SaleunitName" class="form-label">Name</label>
-        <input asp-for="Saleunit.SaleunitName" class="form-control" />
-        <span asp-validation-for="Saleunit.SaleunitName" class="text-danger"></span>
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2">Save</button>
+        <a asp-page="Index" class="btn btn-secondary">Back</a>
     </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.Note" class="form-label">Note</label>
-        <input asp-for="Saleunit.Note" class="form-control" />
-        <span asp-validation-for="Saleunit.Note" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.PlReviewCfg" class="form-label">PL Review Cfg</label>
-        <input asp-for="Saleunit.PlReviewCfg" class="form-control" />
-        <span asp-validation-for="Saleunit.PlReviewCfg" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.InsertTime" class="form-label"></label>
-        <input asp-for="Saleunit.InsertTime" class="form-control" type="datetime-local" />
-        <span asp-validation-for="Saleunit.InsertTime" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.SaleunitTypeId" class="form-label">Type</label>
-        <select asp-for="Saleunit.SaleunitTypeId" asp-items="Model.SaleunitTypeSelectList" class="form-select searchable"></select>
-        <span asp-validation-for="Saleunit.SaleunitTypeId" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.SaleunitGroupId" class="form-label">Group</label>
-        <select asp-for="Saleunit.SaleunitGroupId" asp-items="Model.SaleunitGroupSelectList" class="form-select searchable"></select>
-        <span asp-validation-for="Saleunit.SaleunitGroupId" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Saleunit.SaleunitRegionId" class="form-label">Region</label>
-        <select asp-for="Saleunit.SaleunitRegionId" asp-items="Model.SaleunitRegionSelectList" class="form-select searchable"></select>
-        <span asp-validation-for="Saleunit.SaleunitRegionId" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-page="Index" class="btn btn-secondary">Back</a>
 </form>
 
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/select-search.js" asp-append-version="true"></script>
 }

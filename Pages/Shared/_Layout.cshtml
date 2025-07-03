@@ -21,7 +21,6 @@
     @{
         var displayName = User.Identity?.Name;
         var email = User.FindFirst("preferred_username")?.Value;
-        var saleunitMenuItems = Db.A3StdSaleunits.OrderBy(s => s.SaleunitName).ToList();
     }
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
