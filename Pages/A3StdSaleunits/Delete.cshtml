@@ -10,13 +10,21 @@
 <div>
     <h4>@Model.Saleunit.SaleunitName</h4>
     <dl class="row">
-        <dt class="col-sm-2">Code</dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Saleunit.SaleunitCode)
+        </dt>
         <dd class="col-sm-10">@Model.Saleunit.SaleunitCode</dd>
-        <dt class="col-sm-2">Name</dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Saleunit.SaleunitName)
+        </dt>
         <dd class="col-sm-10">@Model.Saleunit.SaleunitName</dd>
-        <dt class="col-sm-2">Note</dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Saleunit.Note)
+        </dt>
         <dd class="col-sm-10">@Model.Saleunit.Note</dd>
-        <dt class="col-sm-2">PL Review Cfg</dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Saleunit.PlReviewCfg)
+        </dt>
         <dd class="col-sm-10">@Model.Saleunit.PlReviewCfg</dd>
     </dl>
     <form method="post">

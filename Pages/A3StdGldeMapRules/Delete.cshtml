@@ -10,7 +10,9 @@
 <div>
     <h4>@Model.Item.RuleName</h4>
     <dl class="row">
-        <dt class="col-sm-2">Period</dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item.PeriodStart)
+        </dt>
         <dd class="col-sm-10">@Model.Item.PeriodStart - @Model.Item.PeriodEnd</dd>
     </dl>
     <form method="post">
