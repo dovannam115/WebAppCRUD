@@ -1,0 +1,26 @@
+@page
+@model ControlCenterApp.Pages.A3StdDistributorTypeL1s.CreateModel
+@{
+    ViewData["Title"] = "Create Distributor Type L1";
+}
+
+<h1>Create Distributor Type L1</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Item.DistributorTypeL1" class="form-label">Group</label>
+        <input asp-for="Item.DistributorTypeL1" class="form-control" />
+        <span asp-validation-for="Item.DistributorTypeL1" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.ObjDescription" class="form-label">Description</label>
+        <input asp-for="Item.ObjDescription" class="form-control" />
+        <span asp-validation-for="Item.ObjDescription" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

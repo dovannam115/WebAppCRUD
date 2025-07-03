@@ -1,0 +1,56 @@
+@page
+@model ControlCenterApp.Pages.A3StdGldeMapOrders.CreateModel
+@{
+    ViewData["Title"] = "Create Map Order";
+}
+
+<h1>Create Map Order</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Item.MapOrder" class="form-label">Map Order</label>
+        <input asp-for="Item.MapOrder" class="form-control" />
+        <span asp-validation-for="Item.MapOrder" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.ObjDescription" class="form-label">Description</label>
+        <input asp-for="Item.ObjDescription" class="form-control" />
+        <span asp-validation-for="Item.ObjDescription" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.LogicOrder" class="form-label">Logic Order</label>
+        <input asp-for="Item.LogicOrder" class="form-control" />
+        <span asp-validation-for="Item.LogicOrder" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.CfgBranch" class="form-label">Cfg Branch</label>
+        <input asp-for="Item.CfgBranch" class="form-control" />
+        <span asp-validation-for="Item.CfgBranch" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.CfgDept" class="form-label">Cfg Dept</label>
+        <input asp-for="Item.CfgDept" class="form-control" />
+        <span asp-validation-for="Item.CfgDept" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.CfgProduct" class="form-label">Cfg Product</label>
+        <input asp-for="Item.CfgProduct" class="form-control" />
+        <span asp-validation-for="Item.CfgProduct" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.CfgAgent" class="form-label">Cfg Agent</label>
+        <input asp-for="Item.CfgAgent" class="form-control" />
+        <span asp-validation-for="Item.CfgAgent" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Item.CfgDistributor" class="form-label">Cfg Distributor</label>
+        <input asp-for="Item.CfgDistributor" class="form-control" />
+        <span asp-validation-for="Item.CfgDistributor" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
