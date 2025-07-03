@@ -7,13 +7,12 @@
 
     // Grab the "name" claim (your display name) instead of the UPN
     var displayName = User.FindFirst("name")?.Value
-                      ?? User.FindFirst(ClaimTypes.Name)?.Value
-                      ?? "User";
+    ?? User.FindFirst(ClaimTypes.Name)?.Value
+    ?? "User";
 }
 
 <div class="text-center">
     <i class="bi bi-speedometer2 display-3 text-primary"></i>
     <h1 class="display-4">Welcome @displayName</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
 </div>
