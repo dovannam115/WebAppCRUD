@@ -9,7 +9,7 @@ namespace ControlCenterApp.Models
     {
         [Key]
         [Column("SALEUNIT_ID")]
-        public int SaleUnitId { get; set; }
+        public Guid SaleUnitId { get; set; }
 
         [Column("INSERT_TIME")]
         public DateTime? InsertTime { get; set; }
@@ -27,12 +27,12 @@ namespace ControlCenterApp.Models
         public string? PlReviewCfg { get; set; }
 
         [Column("SALEUNIT_TYPE_ID")]
-        public int? SaleUnitTypeId { get; set; }
+        public Guid? SaleUnitTypeId { get; set; }
 
         [Column("SALEUNIT_GROUP_ID")]
-        public int? SaleUnitGroupId { get; set; }
+        public Guid? SaleUnitGroupId { get; set; }
 
         [Column("SALEUNIT_REGION_ID")]
-        public int? SaleUnitRegionId { get; set; }
+        public Guid? SaleUnitRegionId { get; set; }
     }
 }
