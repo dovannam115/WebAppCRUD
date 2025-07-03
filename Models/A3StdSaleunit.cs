@@ -23,6 +23,8 @@ public partial class A3StdSaleunit
 
     public Guid? SaleunitRegionId { get; set; }
 
+    public virtual ICollection<A3StdGldeMapRule> A3StdGldeMapRules { get; set; } = new List<A3StdGldeMapRule>();
+
     public virtual A3StdSaleunitGroup? SaleunitGroup { get; set; }
 
     public virtual A3StdSaleunitRegion? SaleunitRegion { get; set; }
