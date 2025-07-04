@@ -81,6 +81,7 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
             entity.PSystem = item.PSystem;
             entity.IasLob = item.IasLob;
 
+            _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
             return new JsonResult(entity, jsonOptions);
@@ -96,6 +97,8 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
                 entity.PProductName = row.PProductName;
                 entity.PSystem = row.PSystem;
                 entity.IasLob = row.IasLob;
+
+                _context.Entry(entity).State = EntityState.Modified;
             }
 
             await _context.SaveChangesAsync();

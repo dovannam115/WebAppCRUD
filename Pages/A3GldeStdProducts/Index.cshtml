@@ -113,9 +113,18 @@
         }
 
         async function loadData() {
+            const sortState = hot.getPlugin('columnSorting').getSortConfig();
+            const filterPlugin = hot.getPlugin('filters');
+            const filterState = filterPlugin.getState();
+
             const res = await fetch('@Url.Page("./Index", "GridData")');
             const rows = await res.json();
             hot.loadData(rows);
+
+            filterPlugin.setState(filterState);
+            filterPlugin.filter();
+            hot.getPlugin('columnSorting').setSortConfig(sortState);
+
             changedRows.clear();
             showMessage('Data loaded');
         }
