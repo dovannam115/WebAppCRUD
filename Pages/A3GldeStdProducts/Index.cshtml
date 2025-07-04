@@ -94,11 +94,19 @@
                     else {
                         changedRows.set(rowData.RefId, rowData);
                         if (autoSave) {
-                            await fetch('@Url.Page("./Index", "Save")', {
+                            const res = await fetch('@Url.Page("./Index", "Save")', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(rowData)
                             });
+                            if (!res.ok) {
+                                console.error('Auto save request failed');
+                            } else {
+                                const result = await res.json();
+                                if (!result.success) {
+                                    console.error('Auto save unsuccessful');
+                                }
+                            }
                         }
                     }
                 }
@@ -113,9 +121,15 @@
         }
 
         async function loadData() {
+            const sortPlugin = hot.getPlugin('multiColumnSorting');
+            const sortState = sortPlugin ? sortPlugin.getSortConfig() : null;
+
             const res = await fetch('@Url.Page("./Index", "GridData")');
             const rows = await res.json();
             hot.loadData(rows);
+            if (sortPlugin && sortState) {
+                sortPlugin.setSortConfig(sortState);
+            }
             changedRows.clear();
             showMessage('Data loaded');
         }
@@ -130,9 +144,16 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Array.from(changedRows.values()))
             });
-            if (res.ok) {
+            if (!res.ok) {
+                showMessage('Save request failed');
+                return;
+            }
+            const saveResult = await res.json();
+            if (saveResult.success) {
                 showMessage('Data saved');
                 changedRows.clear();
+            } else {
+                showMessage('No rows saved');
             }
         }
 
