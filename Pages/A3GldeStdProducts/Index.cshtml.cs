@@ -86,8 +86,8 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
 
             var affected = await _context.SaveChangesAsync();
             _logger.LogInformation("Save single product {Id}, affected rows {Count}", entity.RefId, affected);
-            var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
-            return new JsonResult(new { Success = affected > 0, Item = entity }, jsonOptions);
+            var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            return new JsonResult(new { success = affected > 0, item = entity }, jsonOptions);
         }
 
         public async Task<IActionResult> OnPostSaveAllAsync([FromBody] List<A3GldeStdProduct> items)
@@ -104,7 +104,8 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
 
             var affected = await _context.SaveChangesAsync();
             _logger.LogInformation("Save {Count} product(s)", affected);
-            return new JsonResult(new { Success = affected > 0, Affected = affected });
+            var jsonOptions2 = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            return new JsonResult(new { success = affected > 0, affected }, jsonOptions2);
         }
     }
 }

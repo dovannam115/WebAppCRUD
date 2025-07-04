@@ -121,9 +121,15 @@
         }
 
         async function loadData() {
+            const sortPlugin = hot.getPlugin('multiColumnSorting');
+            const sortState = sortPlugin ? sortPlugin.getSortConfig() : null;
+
             const res = await fetch('@Url.Page("./Index", "GridData")');
             const rows = await res.json();
             hot.loadData(rows);
+            if (sortPlugin && sortState) {
+                sortPlugin.setSortConfig(sortState);
+            }
             changedRows.clear();
             showMessage('Data loaded');
         }
