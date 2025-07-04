@@ -6,6 +6,10 @@
     ViewData["Title"] = "Products";
 }
 
+<!-- 1️⃣ Floating alert: hidden by default -->
+<div id="messageBox" class="alert alert-info position-absolute top-0 start-50 translate-middle-x mt-5 d-none"
+    role="alert" style="z-index:1050; min-width:200px;"></div>
+
 <h1>Products</h1>
 
 <div class="d-flex align-items-center mb-2">
@@ -23,7 +27,7 @@
     </div>
 </div>
 
-<div id="messageBox" class="alert alert-info d-none" role="alert"></div>
+@* <div id="messageBox" class="alert alert-info d-none" role="alert"></div> *@
 <div id="hot-table" class="ht-theme-horizon"></div>
 
 @section Scripts {
@@ -40,7 +44,7 @@
         const changedRows = new Map();
 
         const initialData = @Html.Raw(JsonSerializer.Serialize(
-                            Model.Items.Select(i => new { i.RefId, i.PProduct, i.PProductName, i.PSystem, i.IasLob })
+                                                            Model.Items.Select(i => new { i.RefId, i.PProduct, i.PProductName, i.PSystem, i.IasLob })
                     ));
 
     const hot = new Handsontable(container, {
@@ -121,15 +125,9 @@
         }
 
         async function loadData() {
-            const sortPlugin = hot.getPlugin('multiColumnSorting');
-            const sortState = sortPlugin ? sortPlugin.getSortConfig() : null;
-
             const res = await fetch('@Url.Page("./Index", "GridData")');
             const rows = await res.json();
             hot.loadData(rows);
-            if (sortPlugin && sortState) {
-                sortPlugin.setSortConfig(sortState);
-            }
             changedRows.clear();
             showMessage('Data loaded');
         }
