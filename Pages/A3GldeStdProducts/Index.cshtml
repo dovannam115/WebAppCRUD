@@ -49,10 +49,10 @@
                 "@Html.DisplayNameFor(m => m.Items[0].IasLob)"
             ],
             columns: [
-                { data: 'PProduct', validator: requiredValidator, allowInvalid: false },
+                { data: 'PProduct', allowEmpty: false, allowInvalid: false },
                 { data: 'PProductName' },
-                { data: 'PSystem', validator: requiredValidator, allowInvalid: false },
-                { data: 'IasLob', validator: requiredValidator, allowInvalid: false }
+                { data: 'PSystem', allowEmpty: false, allowInvalid: false },
+                { data: 'IasLob', allowEmpty: false, allowInvalid: false }
             ],
             rowHeaders: true,
             dropdownMenu: true,
