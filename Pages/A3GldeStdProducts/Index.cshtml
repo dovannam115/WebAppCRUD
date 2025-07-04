@@ -8,18 +8,23 @@
 
 <h1>Products</h1>
 
-<p class="mb-2">
+<div class="d-flex align-items-center mb-2">
     <a asp-page="Create" class="btn btn-primary me-2">
         <i class="bi bi-plus-circle me-1"></i> New
     </a>
-    <button id="loadBtn" type="button" class="btn btn-secondary me-2">Refresh</button>
-    <button id="saveBtn" type="button" class="btn btn-success me-2">Save</button>
-    <button id="toggleAutoBtn" type="button" class="btn btn-info">Auto Save: On</button>
-</p>
+    <button id="loadBtn" class="btn btn-secondary me-2">Refresh</button>
+    <button id="saveBtn" class="btn btn-success me-2">Save</button>
+
+    <div class="form-check form-switch ms-3 mb-0">
+        <input class="form-check-input" type="checkbox" id="autoSaveCheckbox" checked>
+        <label class="form-check-label" for="autoSaveCheckbox">
+            Auto Save
+        </label>
+    </div>
+</div>
 
 <div id="messageBox" class="alert alert-info d-none" role="alert"></div>
-
-<div id="hot-table" class="ht-theme-horizon mb-5" style="height:60vh;"></div>
+<div id="hot-table" class="ht-theme-horizon"></div>
 
 @section Scripts {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/styles/handsontable.min.css" />
@@ -30,44 +35,48 @@
         const messageBox = document.getElementById('messageBox');
         const loadBtn = document.getElementById('loadBtn');
         const saveBtn = document.getElementById('saveBtn');
-        const toggleBtn = document.getElementById('toggleAutoBtn');
-        let autoSave = true;
+        const autoChk = document.getElementById('autoSaveCheckbox');
+        let autoSave = autoChk.checked;
         const changedRows = new Map();
 
-        const requiredValidator = (value, callback) => {
-            callback(value != null && value.toString().trim() !== '');
-        };
+        const initialData = @Html.Raw(JsonSerializer.Serialize(
+                            Model.Items.Select(i => new { i.RefId, i.PProduct, i.PProductName, i.PSystem, i.IasLob })
+                    ));
 
-        const initialData = @Html.Raw(JsonSerializer.Serialize(Model.Items.Select(i => new { i.RefId, i.PProduct, i.PProductName, i.PSystem, i.IasLob })));
+    const hot = new Handsontable(container, {
+        data: initialData,
+        colHeaders: [
+            "@Html.DisplayNameFor(m => m.Items[0].PProduct)",
+            "@Html.DisplayNameFor(m => m.Items[0].PProductName)",
+            "@Html.DisplayNameFor(m => m.Items[0].PSystem)",
+            "@Html.DisplayNameFor(m => m.Items[0].IasLob)"
+        ],
+        columns: [
+            { data: 'PProduct', allowEmpty: false, allowInvalid: false },
+            { data: 'PProductName' },
+            { data: 'PSystem', allowEmpty: false, allowInvalid: false },
+            { data: 'IasLob', allowEmpty: false, allowInvalid: false }
+        ],
+        height: 500,
+        rowHeaders: true,
+        dropdownMenu: ['make_read_only', 'alignment', '---------', 'filter_by_condition', 'filter_by_value', 'filter_action_bar'],
+        filters: true,
+        autoWrapRow: true,
+        autoWrapCol: true,
+        multiColumnSorting: true,
+        manualRowResize: true,
+        manualColumnResize: true,
+        navigableHeaders: true,
+        contextMenu: true,
+        licenseKey: 'non-commercial-and-evaluation',
+        afterChange: async (changes, source) => {
+            if (!changes || source === 'loadData' || source === 'assignId') return;
+            for (const [row] of changes) {
+                const rowData = hot.getSourceDataAtRow(row);
+                // if missing required, skip
+                if (!rowData.PProduct || !rowData.PSystem || !rowData.IasLob) continue;
 
-        const hot = new Handsontable(container, {
-            data: initialData,
-            colHeaders: [
-                "@Html.DisplayNameFor(m => m.Items[0].PProduct)",
-                "@Html.DisplayNameFor(m => m.Items[0].PProductName)",
-                "@Html.DisplayNameFor(m => m.Items[0].PSystem)",
-                "@Html.DisplayNameFor(m => m.Items[0].IasLob)"
-            ],
-            columns: [
-                { data: 'PProduct', allowEmpty: false, allowInvalid: false },
-                { data: 'PProductName' },
-                { data: 'PSystem', allowEmpty: false, allowInvalid: false },
-                { data: 'IasLob', allowEmpty: false, allowInvalid: false }
-            ],
-            rowHeaders: true,
-            dropdownMenu: true,
-            filters: true,
-            columnSorting: true,
-            manualColumnResize: true,
-            contextMenu: true,
-            licenseKey: 'non-commercial-and-evaluation',
-            afterChange: async (changes, source) => {
-                if (!changes || source === 'loadData' || source === 'assignId') return;
-                for (const [row] of changes) {
-                    const rowData = hot.getSourceDataAtRow(row);
-                    if (!rowData.PProduct || !rowData.PSystem || !rowData.IasLob) {
-                        continue;
-                    }
+                    // new record
                     if (!rowData.RefId) {
                         const createRes = await fetch('@Url.Page("./Index", "Create")', {
                             method: 'POST',
@@ -80,7 +89,9 @@
                             hot.setDataAtRowProp(row, 'RefId', id, 'assignId');
                             rowData.RefId = id;
                         }
-                    } else {
+                    }
+                    // existing
+                    else {
                         changedRows.set(rowData.RefId, rowData);
                         if (autoSave) {
                             await fetch('@Url.Page("./Index", "Save")', {
@@ -125,15 +136,12 @@
             }
         }
 
+        // event wiring
         loadBtn.addEventListener('click', loadData);
         saveBtn.addEventListener('click', saveData);
-        toggleBtn.addEventListener('click', () => {
-            autoSave = !autoSave;
-            toggleBtn.textContent = `Auto Save: ${autoSave ? 'On' : 'Off'}`;
+        autoChk.addEventListener('change', () => {
+            autoSave = autoChk.checked;
             showMessage(`Auto save ${autoSave ? 'enabled' : 'disabled'}`);
         });
-
-        // initial load
-        loadData();
     </script>
 }
