@@ -1,4 +1,6 @@
 @page
+@using System.Text.Json
+@using System.Linq
 @model ControlCenterApp.Pages.A3GldeStdProducts.IndexModel
 @{
     ViewData["Title"] = "Products";
@@ -6,37 +8,132 @@
 
 <h1>Products</h1>
 
-<p>
-    <a asp-page="Create" class="btn btn-primary">
+<p class="mb-2">
+    <a asp-page="Create" class="btn btn-primary me-2">
         <i class="bi bi-plus-circle me-1"></i> New
     </a>
+    <button id="loadBtn" type="button" class="btn btn-secondary me-2">Refresh</button>
+    <button id="saveBtn" type="button" class="btn btn-success me-2">Save</button>
+    <button id="toggleAutoBtn" type="button" class="btn btn-info">Auto Save: On</button>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Items[0].PProduct)</th>
-            <th>@Html.DisplayNameFor(model => model.Items[0].PProductName)</th>
-            <th>@Html.DisplayNameFor(model => model.Items[0].PSystem)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Items)
-{
-    <tr>
-        <td>@item.PProduct</td>
-        <td>@item.PProductName</td>
-        <td>@item.PSystem</td>
-        <td>
-            <a asp-page="Edit" asp-route-id="@item.RefId">
-                <i class="bi bi-pencil-square me-1"></i>
-            </a>|
-            <a asp-page="Delete" asp-route-id="@item.RefId" class="text-danger">
-                <i class="bi bi-trash me-1"></i>
-            </a>
-        </td>
-    </tr>
+<div id="messageBox" class="alert alert-info d-none" role="alert"></div>
+
+<div id="hot-table" class="ht-theme-horizon mb-5" style="height:60vh;"></div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/styles/handsontable.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/styles/ht-theme-horizon.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <script>
+        const container = document.getElementById('hot-table');
+        const messageBox = document.getElementById('messageBox');
+        const loadBtn = document.getElementById('loadBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const toggleBtn = document.getElementById('toggleAutoBtn');
+        let autoSave = true;
+        const changedRows = new Map();
+
+        const requiredValidator = (value, callback) => {
+            callback(value != null && value.toString().trim() !== '');
+        };
+
+        const initialData = @Html.Raw(JsonSerializer.Serialize(Model.Items.Select(i => new { i.RefId, i.PProduct, i.PProductName, i.PSystem, i.IasLob })));
+
+        const hot = new Handsontable(container, {
+            data: initialData,
+            colHeaders: [
+                "@Html.DisplayNameFor(m => m.Items[0].PProduct)",
+                "@Html.DisplayNameFor(m => m.Items[0].PProductName)",
+                "@Html.DisplayNameFor(m => m.Items[0].PSystem)",
+                "@Html.DisplayNameFor(m => m.Items[0].IasLob)"
+            ],
+            columns: [
+                { data: 'PProduct', allowEmpty: false, allowInvalid: false },
+                { data: 'PProductName' },
+                { data: 'PSystem', allowEmpty: false, allowInvalid: false },
+                { data: 'IasLob', allowEmpty: false, allowInvalid: false }
+            ],
+            rowHeaders: true,
+            dropdownMenu: true,
+            filters: true,
+            columnSorting: true,
+            manualColumnResize: true,
+            contextMenu: true,
+            licenseKey: 'non-commercial-and-evaluation',
+            afterChange: async (changes, source) => {
+                if (!changes || source === 'loadData' || source === 'assignId') return;
+                for (const [row] of changes) {
+                    const rowData = hot.getSourceDataAtRow(row);
+                    if (!rowData.PProduct || !rowData.PSystem || !rowData.IasLob) {
+                        continue;
+                    }
+                    if (!rowData.RefId) {
+                        const createRes = await fetch('@Url.Page("./Index", "Create")', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(rowData)
+                        });
+                        if (createRes.ok) {
+                            const created = await createRes.json();
+                            const id = created.refId || created.RefId;
+                            hot.setDataAtRowProp(row, 'RefId', id, 'assignId');
+                            rowData.RefId = id;
+                        }
+                    } else {
+                        changedRows.set(rowData.RefId, rowData);
+                        if (autoSave) {
+                            await fetch('@Url.Page("./Index", "Save")', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(rowData)
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        async function showMessage(msg) {
+            messageBox.textContent = msg;
+            messageBox.classList.remove('d-none');
+            await new Promise(r => setTimeout(r, 2000));
+            messageBox.classList.add('d-none');
+        }
+
+        async function loadData() {
+            const res = await fetch('@Url.Page("./Index", "GridData")');
+            const rows = await res.json();
+            hot.loadData(rows);
+            changedRows.clear();
+            showMessage('Data loaded');
+        }
+
+        async function saveData() {
+            if (changedRows.size === 0) {
+                showMessage('No changes');
+                return;
+            }
+            const res = await fetch('@Url.Page("./Index", "SaveAll")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Array.from(changedRows.values()))
+            });
+            if (res.ok) {
+                showMessage('Data saved');
+                changedRows.clear();
+            }
+        }
+
+        loadBtn.addEventListener('click', loadData);
+        saveBtn.addEventListener('click', saveData);
+        toggleBtn.addEventListener('click', () => {
+            autoSave = !autoSave;
+            toggleBtn.textContent = `Auto Save: ${autoSave ? 'On' : 'Off'}`;
+            showMessage(`Auto save ${autoSave ? 'enabled' : 'disabled'}`);
+        });
+
+        // initial load
+        loadData();
+    </script>
 }
-    </tbody>
-</table>
