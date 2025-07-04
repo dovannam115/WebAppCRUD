@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ControlCenterApp.Data;
 using ControlCenterApp.Models;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace ControlCenterApp.Pages.A3GldeStdProducts
 {
@@ -11,10 +12,12 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context, ILogger<IndexModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IList<A3GldeStdProduct> Items { get; set; } = new List<A3GldeStdProduct>();
@@ -81,10 +84,10 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
             entity.PSystem = item.PSystem;
             entity.IasLob = item.IasLob;
 
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var affected = await _context.SaveChangesAsync();
+            _logger.LogInformation("Save single product {Id}, affected rows {Count}", entity.RefId, affected);
             var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
-            return new JsonResult(entity, jsonOptions);
+            return new JsonResult(new { Success = affected > 0, Item = entity }, jsonOptions);
         }
 
         public async Task<IActionResult> OnPostSaveAllAsync([FromBody] List<A3GldeStdProduct> items)
@@ -97,12 +100,11 @@ namespace ControlCenterApp.Pages.A3GldeStdProducts
                 entity.PProductName = row.PProductName;
                 entity.PSystem = row.PSystem;
                 entity.IasLob = row.IasLob;
-
-                _context.Entry(entity).State = EntityState.Modified;
             }
 
-            await _context.SaveChangesAsync();
-            return new JsonResult(new { Success = true });
+            var affected = await _context.SaveChangesAsync();
+            _logger.LogInformation("Save {Count} product(s)", affected);
+            return new JsonResult(new { Success = affected > 0, Affected = affected });
         }
     }
 }
